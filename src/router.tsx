@@ -9,7 +9,7 @@ import { HomePage } from './pages/home-page';
 
 export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
-  { path: '/home', element: <HomePage /> },
+  { path: '/', element: <HomePage /> },
 
   { path: '/courses/*', element: <UserCoursesPage pathname={config.pages.user.courses} /> },
 
