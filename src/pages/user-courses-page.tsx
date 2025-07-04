@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GalleryTemplate } from '../templates/gallery-template';
 import { useAuth } from '../hooks/auth';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { Course } from '../models/course';
 import { Section } from '../models/section';
 import { Lesson } from '../models/lesson';
 import { CinemaTemplate } from '../templates/cinema-template';
-import { Button } from '../components/button';
 import { IconBack } from '../icons/icon-back';
 
 export const UserCoursesPage = ({ pathname }: { pathname: string }) => {
