@@ -6,7 +6,5 @@ export type DividerProps = HUIDividerProps & {
 };
 
 export const Divider = ({ ...props }: DividerProps) => {
-  return (
-    <DividerHUI  { ...props } />
-  );
+  return <DividerHUI {...props} />;
 };

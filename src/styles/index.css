@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-image: url('./../assets/bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 30px;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 25px;
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.fade-right {
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
+.fade-bottom {
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
+.grid-auto-resize {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}

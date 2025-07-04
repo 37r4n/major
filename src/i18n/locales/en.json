@@ -1,0 +1,24 @@
+{
+  "login": {
+    "card": {
+      "header": {
+        "title": "Welcome",
+        "subtitle": "Log in"
+      },
+      "fields": {
+        "username": {
+          "placeholder": "Employee number"
+        }
+      },
+      "button": {
+        "content": "Log in"
+      }
+    }
+  },
+  "not-found": {
+    "title": "You have lost",
+    "button": {
+      "content": "Go back"
+    }
+  }
+}

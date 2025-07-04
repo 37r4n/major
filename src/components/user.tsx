@@ -1,9 +1,16 @@
 import { User as UserHUI, UserProps as HUI_UserProps } from '@heroui/react';
 
-export type UserProps = HUI_UserProps & { src?: string };
+export type ProfileProps = HUI_UserProps & { src?: string | null };
 
-export const User = ({ ...props }: UserProps) => {
-  return <UserHUI  {...props} avatarProps={{
-    src: props.src, isBordered: true, color: 'primary'
-  }} />;
+export const Profile = ({ ...props }: ProfileProps) => {
+  return (
+    <UserHUI
+      {...props}
+      avatarProps={{
+        src: props.src ?? '',
+        isBordered: true,
+        color: 'primary',
+      }}
+    />
+  );
 };

@@ -1,0 +1,24 @@
+{
+  "login": {
+    "card": {
+      "header": {
+        "title": "Ki'imak óolal",
+        "subtitle": "Ts'íibt a meyaj ku meyaj"
+      },
+      "fields": {
+        "username": {
+          "placeholder": "Meyaj ku meyaj"
+        }
+      },
+      "button": {
+        "content": "Okbal"
+      }
+    }
+  },
+  "not-found": {
+    "title": "Ts'o'ok a sa'atal",
+    "button": {
+      "content": "Suunen"
+    }
+  }
+}

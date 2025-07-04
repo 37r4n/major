@@ -1,0 +1,34 @@
+{
+  "login": {
+    "title": "Bienvenido",
+    "subtitle": "Inicia sesión",
+    "button": "Iniciar",
+    "fields": {
+      "username": {
+        "placeholder": "Número de empleado"
+      }
+    }
+  },
+  "not-found": {
+    "title": "Te has perdido",
+    "description": "Haz click en el boton para regresar",
+    "button": "Regresar"
+  },
+  "admin": {
+    "courses": {
+      "navbar": {
+        "home": "Inicio",
+        "courses": "Cursos",
+        "enrollments": "Inscripciones"
+      }
+    }
+  },
+  "user": {
+    "courses": {
+      "navbar": {
+        "home": "Inicio",
+        "courses": "Cursos"
+      }
+    }
+  }
+}

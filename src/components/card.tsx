@@ -5,5 +5,5 @@ export type CardProps = Omit<HUI_CardProps, 'onPress'> & {
 };
 
 export const Card = ({ onClick, ...props }: CardProps) => {
-  return <CardHUI isBlurred onPress={onClick} {...props} />;
+  return <CardHUI isBlurred isPressable={onClick ? true : false} onPress={onClick} {...props} />;
 };
