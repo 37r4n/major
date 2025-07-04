@@ -14,7 +14,6 @@ import { User } from '../models/user';
 import { FormCourse } from '../layouts/form-course';
 import { IconCreate } from '../icons/icon-create';
 import { FormSection } from '../layouts/form-section';
-import { FormLesson } from '../layouts/form-lesson';
 
 export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
   const navigate = useNavigate();
