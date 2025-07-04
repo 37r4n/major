@@ -5,9 +5,11 @@ import { AdminEnrollmentsPage } from './pages/admin-enrollments-page';
 import { config } from './config';
 import { PageNotFound } from './pages/page-not-found';
 import { UserCoursesPage } from './pages/user-courses-page';
+import { HomePage } from './pages/home-page';
 
 export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
+  { path: '/home', element: <HomePage /> },
 
   { path: '/courses/*', element: <UserCoursesPage pathname={config.pages.user.courses} /> },
 
