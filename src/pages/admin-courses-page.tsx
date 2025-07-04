@@ -151,17 +151,7 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
             drawer.fire({
               content: (
                 <div className="flex flex-col gap-8 justify-center items-center h-full w-full">
-                  <FormLesson
-                    title="Actualizar curso"
-                    lesson={{ ...lesson }}
-                    onSubmit={({ lesson }) => updateLesson({ lesson })}
-                    button="Guardar cambios"
-                  />
 
-                  <IconFolder onClick={() => {
-                    navigate(`${pathname}/${course_id}/${section_id}/${lesson.id}`)
-                    drawer.close()
-                  }} />
                 </div>
               ),
             }),
