@@ -8,7 +8,6 @@ import { Avatar } from '../components/avatar';
 
 export interface NavbarProps {
   user: User;
-  allowed_roles?: string[];
   links: {
     title: string;
     is_active?: boolean;

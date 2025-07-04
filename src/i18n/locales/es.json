@@ -14,20 +14,26 @@
     "description": "Haz click en el boton para regresar",
     "button": "Regresar"
   },
-  "admin": {
+  "admin-courses": {
     "courses": {
       "navbar": {
         "home": "Inicio",
         "courses": "Cursos",
         "enrollments": "Inscripciones"
       }
-    }
-  },
-  "user": {
-    "courses": {
+    },
+    "sections": {
       "navbar": {
         "home": "Inicio",
-        "courses": "Cursos"
+        "courses": "Cursos",
+        "enrollments": "Inscripciones"
+      }
+    },
+    "lessons": {
+      "navbar": {
+        "home": "Inicio",
+        "courses": "Cursos",
+        "enrollments": "Inscripciones"
       }
     }
   }

@@ -8,6 +8,5 @@ export const sectionAdapter = (data: any): Section => ({
   display_order: data.display_order,
   thumbnail_url: data.thumbnail_url,
   background_url: data.background_url,
-  manual_url: data.manual_url,
   is_unlocked: data.is_unlocked ?? true,
 });

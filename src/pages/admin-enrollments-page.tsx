@@ -17,7 +17,7 @@ import { Enrollment } from '../models/enrollment';
 import { Avatar } from '../components/avatar';
 
 export const AdminEnrollmentsPage = ({ pathname }: { pathname: string }) => {
-  const auth = useAuth();
+  const auth = useAuth({ allowed_roles: [config.roles.admin] });
   const navigate = useNavigate();
   const translation = useTranslation();
   const location = useLocation();
@@ -53,19 +53,6 @@ export const AdminEnrollmentsPage = ({ pathname }: { pathname: string }) => {
     await services.enrollments.create({ user_id: user.id, course_id });
     getEnrollments();
   };
-
-  const validate = async () => {
-    const allowed_roles = ['admin_major'];
-    await auth.validate();
-    console.log(auth.me);
-
-    const is_authorized = auth.me.roles.some((role) => allowed_roles.includes(role.name));
-    if (!is_authorized) navigate('/login');
-  };
-
-  useEffect(() => {
-    if (auth.me.is_active) validate();
-  }, []);
 
   useEffect(() => {
     getAllCourses();

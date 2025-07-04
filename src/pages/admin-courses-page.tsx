@@ -3,7 +3,6 @@ import { Course } from '../models/course';
 import { services } from '../services';
 import { GalleryTemplate } from '../templates/gallery-template';
 import { useDrawer } from '../contexts/drawer-context';
-import { Profile } from '../components/user';
 import { IconFolder } from '../icons/icon-folder';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Section } from '../models/section';
@@ -11,11 +10,16 @@ import { Lesson } from '../models/lesson';
 import { useAuth } from '../hooks/auth';
 import { useTranslation } from 'react-i18next';
 import { config } from '../config';
+import { User } from '../models/user';
+import { FormCourse } from '../layouts/form-course';
+import { IconCreate } from '../icons/icon-create';
+import { FormSection } from '../layouts/form-section';
+import { FormLesson } from '../layouts/form-lesson';
 
 export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
   const navigate = useNavigate();
   const drawer = useDrawer();
-  const auth = useAuth();
+  const auth = useAuth({ allowed_roles: [config.roles.admin] });
   const translation = useTranslation();
   const location = useLocation();
   const { '*': params } = useParams();
@@ -24,6 +28,7 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   const getAllCourses = async () => {
     const response = await services.courses.get();
@@ -40,16 +45,62 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
     setLessons(response);
   };
 
-  const validate = async () => {
-    const allowed_roles = ['admin_major'];
-    await auth.validate();
+  const getAllUsers = async () => {
+    const response = await services.users.get({ limit: 9999 });
+    setUsers(response);
+  };
 
-    const is_authorized = auth.me.roles.some((role) => allowed_roles.includes(role.name));
-    if (!is_authorized) navigate('/login');
+  const updateCourse = async ({ course }: { course: Course }) => {
+    await services.courses.update({
+      id: course.id,
+      title: course.title,
+      description: course.description,
+      author_id: course.author.id,
+      manual_url: course.manual_url
+    })
+
+    await getAllCourses()
+    drawer.close()
+  };
+
+  const createCourse = async ({ course }: { course: Course }) => {
+    await services.courses.create({
+      title: course.title,
+      description: course.description,
+      author_id: course.author.id,
+      manual_url: course.manual_url
+    })
+
+    await getAllCourses()
+    drawer.close()
+  };
+
+  const updateSection = async ({ section }: { section: Section }) => {
+    await services.sections.update({
+      id: section.id,
+      course_id: course_id,
+      title: section.title,
+      description: section.description,
+    })
+
+    await getAllSections()
+    drawer.close()
+  };
+
+  const createSection = async ({ section }: { section: Section }) => {
+    await services.sections.create({
+      course_id: course_id,
+      title: section.title,
+      description: section.description,
+      display_order: section.display_order
+    })
+
+    await getAllSections()
+    drawer.close()
   };
 
   useEffect(() => {
-    if (auth.me.is_active) validate();
+    getAllUsers();
   }, []);
 
   useEffect(() => {
@@ -71,18 +122,18 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
           user: auth.me,
           links: [
             {
-              title: translation.t('admin.courses.navbar.home'),
+              title: translation.t('admin-courses.lessons.navbar.home'),
               onClick: () => navigate(config.pages.admin.home),
             },
 
             {
-              title: translation.t('admin.courses.navbar.courses'),
+              title: translation.t('admin-courses.lessons.navbar.courses'),
               onClick: () => navigate(location.pathname),
               is_active: true,
             },
 
             {
-              title: translation.t('admin.courses.navbar.enrollments'),
+              title: translation.t('admin-courses.lessons.navbar.enrollments'),
               onClick: () => navigate(config.pages.admin.enrollments),
             },
           ],
@@ -99,21 +150,18 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
           onClick: () =>
             drawer.fire({
               content: (
-                <div className="flex flex-col h-full w-full gap-4">
-                  <header className="flex flex-col justify-center items-center gap-2 w-full">
-                    <h2>{lesson.title}</h2>
+                <div className="flex flex-col gap-8 justify-center items-center h-full w-full">
+                  <FormLesson
+                    title="Actualizar curso"
+                    lesson={{ ...lesson }}
+                    onSubmit={({ lesson }) => updateLesson({ lesson })}
+                    button="Guardar cambios"
+                  />
 
-                    <div
-                      onClick={() => navigate(`${pathname}/${course_id}/${section_id}/${lesson_id}`)}
-                      className="flex gap-2 w-full justify-center items-center"
-                    >
-                      <IconFolder />
-                    </div>
-                  </header>
-
-                  <main className="flex flex-col justify-center items-center gap-2 w-full">
-                    <p>{lesson.description}</p>
-                  </main>
+                  <IconFolder onClick={() => {
+                    navigate(`${pathname}/${course_id}/${section_id}/${lesson.id}`)
+                    drawer.close()
+                  }} />
                 </div>
               ),
             }),
@@ -129,21 +177,38 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
           user: auth.me,
           links: [
             {
-              title: translation.t('admin.courses.navbar.home'),
+              title: translation.t('admin-courses.sections.navbar.home'),
               onClick: () => navigate(config.pages.admin.home),
             },
 
             {
-              title: translation.t('admin.courses.navbar.courses'),
+              title: translation.t('admin-courses.sections.navbar.courses'),
               onClick: () => navigate(location.pathname),
               is_active: true,
             },
 
             {
-              title: translation.t('admin.courses.navbar.enrollments'),
+              title: translation.t('admin-courses.sections.navbar.enrollments'),
               onClick: () => navigate(config.pages.admin.enrollments),
             },
           ],
+
+          actions: [
+            {
+              content: <IconCreate />, onClick: () => drawer.fire({
+                content: (
+                  <div className="flex justify-center items-center h-full w-full">
+                    <FormSection
+                      course_id={course_id}
+                      title="Crear curso"
+                      onSubmit={({ section }) => createSection({ section })}
+                      button="Guardar cambios"
+                    />
+                  </div>
+                ),
+              })
+            }
+          ]
         }}
         breadcrumbs={[
           { content: 'Cursos', onClick: () => navigate(pathname) },
@@ -157,21 +222,19 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
           onClick: () =>
             drawer.fire({
               content: (
-                <div className="flex flex-col h-full w-full gap-4">
-                  <header className="flex flex-col justify-center items-center gap-2 w-full">
-                    <h2>{section.title}</h2>
+                <div className="flex flex-col justify-center items-center h-full w-full gap-8">
+                  <FormSection
+                    title='Editar sección'
+                    course_id={course_id}
+                    section={section}
+                    onSubmit={({ section }) => updateSection({ section })}
+                    button='Guardar cambios'
+                  />
 
-                    <div
-                      onClick={() => navigate(`${pathname}/${course_id}/${section.id}`)}
-                      className="flex gap-2 w-full justify-center items-center"
-                    >
-                      <IconFolder />
-                    </div>
-                  </header>
-
-                  <main className="flex flex-col justify-center items-center gap-2 w-full">
-                    <p>{section.description}</p>
-                  </main>
+                  <IconFolder onClick={() => {
+                    navigate(`${pathname}/${course_id}/${section.id}`)
+                    drawer.close()
+                  }} />
                 </div>
               ),
             }),
@@ -184,24 +247,40 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
     <GalleryTemplate
       navbar={{
         user: auth.me,
-        allowed_roles: ['admin_major'],
         links: [
           {
-            title: translation.t('admin.courses.navbar.home'),
+            title: translation.t('admin-courses.courses.navbar.home'),
             onClick: () => navigate(config.pages.admin.home),
           },
 
           {
-            title: translation.t('admin.courses.navbar.courses'),
+            title: translation.t('admin-courses.courses.navbar.courses'),
             onClick: () => navigate(location.pathname),
             is_active: true,
           },
 
           {
-            title: translation.t('admin.courses.navbar.enrollments'),
+            title: translation.t('admin-courses.courses.navbar.enrollments'),
             onClick: () => navigate(config.pages.admin.enrollments),
           },
         ],
+
+        actions: [
+          {
+            content: <IconCreate />, onClick: () => drawer.fire({
+              content: (
+                <div className="flex justify-center items-center h-full w-full">
+                  <FormCourse
+                    title="Crear curso"
+                    authors={users}
+                    onSubmit={({ course }) => createCourse({ course })}
+                    button="Guardar cambios"
+                  />
+                </div>
+              ),
+            })
+          }
+        ]
       }}
       breadcrumbs={[
         { content: 'Cursos', is_active: true },
@@ -215,18 +294,19 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
         onClick: () =>
           drawer.fire({
             content: (
-              <div className="flex flex-col h-full w-full gap-2">
-                <header className="flex flex-col justify-center items-center gap-2 w-full">
-                  <h2>{course.title}</h2>
-                  <Profile name={course.author.name} src={course.author.avatar_url} />
+              <div className="flex flex-col gap-8 justify-center items-center h-full w-full">
+                <FormCourse
+                  title="Actualizar curso"
+                  course={{ ...course }}
+                  authors={users}
+                  onSubmit={({ course }) => updateCourse({ course })}
+                  button="Guardar cambios"
+                />
 
-                  <div
-                    onClick={() => navigate(`${pathname}/${course.id}`)}
-                    className="flex gap-2 w-full justify-center items-center"
-                  >
-                    <IconFolder />
-                  </div>
-                </header>
+                <IconFolder onClick={() => {
+                  navigate(`${pathname}/${course.id}`)
+                  drawer.close()
+                }} />
               </div>
             ),
           }),

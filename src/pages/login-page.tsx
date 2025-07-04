@@ -15,13 +15,15 @@ export const LoginPage = () => {
     const response = await services.auth.login({ username });
 
     if (response) {
+      let is_admin = false;
       for (const role of response.roles) {
         if (role.name == 'admin_major') {
+          is_admin = true;
           navigate('/admin/courses');
         }
       }
 
-      //navigate('/courses');
+      if (!is_admin) navigate('/courses');
     }
   };
 
