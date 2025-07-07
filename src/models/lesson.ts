@@ -7,6 +7,6 @@ export type Lesson = {
   duration_seconds: number;
   thumbnail_url: string | null;
   background_url: string | null;
-  resource_url: string | null;
+  resource_url: string;
   is_unlocked: boolean;
 };

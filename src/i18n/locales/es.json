@@ -14,6 +14,36 @@
     "description": "Haz click en el boton para regresar",
     "button": "Regresar"
   },
+  "courses": {
+    "courses": {
+      "navbar": {
+        "home": "Inicio",
+        "courses": "Cursos",
+        "enrollments": "Inscripciones"
+      }
+    },
+    "sections": {
+      "navbar": {
+        "home": "Inicio",
+        "courses": "Cursos",
+        "enrollments": "Inscripciones"
+      }
+    },
+    "lessons": {
+      "navbar": {
+        "home": "Inicio",
+        "courses": "Cursos",
+        "enrollments": "Inscripciones"
+      }
+    }
+  },
+  "admin-home": {
+    "navbar": {
+      "home": "Inicio",
+      "courses": "Cursos",
+      "enrollments": "Inscripciones"
+    }
+  },
   "admin-courses": {
     "courses": {
       "navbar": {
@@ -35,6 +65,13 @@
         "courses": "Cursos",
         "enrollments": "Inscripciones"
       }
+    }
+  },
+  "admin-enrollments": {
+    "navbar": {
+      "home": "Inicio",
+      "courses": "Cursos",
+      "enrollments": "Inscripciones"
     }
   }
 }

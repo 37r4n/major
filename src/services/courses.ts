@@ -9,18 +9,46 @@ export const get = async (): Promise<Course[]> => {
   throw new Error();
 };
 
-export const create = async ({ title, description, author_id, manual_url }: { title: string, description: string | null, author_id: string, manual_url: string | null }): Promise<Course> => {
+export const create = async ({
+  title,
+  description,
+  author_id,
+  manual_url,
+}: {
+  title: string;
+  description: string | null;
+  author_id: string;
+  manual_url: string | null;
+}): Promise<Course> => {
   const response = await axios.post(`${config.api.base}/academy/courses`, {
-    title, description, author_id, manual_url
+    title,
+    description,
+    author_id,
+    manual_url,
   });
 
   if (response?.data?.data) return courseAdapter(response.data.data);
   throw new Error();
 };
 
-export const update = async ({ id, title, description, author_id, manual_url }: { id: string, title: string, description: string | null, author_id: string, manual_url: string | null }): Promise<Course> => {
+export const update = async ({
+  id,
+  title,
+  description,
+  author_id,
+  manual_url,
+}: {
+  id: string;
+  title: string;
+  description: string | null;
+  author_id: string;
+  manual_url: string | null;
+}): Promise<Course> => {
   const response = await axios.patch(`${config.api.base}/academy/courses/${id}`, {
-    title, description, author_id, manual_url
+    title,
+    description,
+    author_id,
+    manual_url,
   });
 
   if (response?.data?.data) return courseAdapter(response.data.data);

@@ -98,12 +98,12 @@ export const UserCoursesPage = ({ pathname }: { pathname: string }) => {
 
           links: [
             {
-              title: translation.t('user.courses.navbar.home'),
+              title: translation.t('courses.lessons.navbar.home'),
               onClick: () => navigate(config.pages.user.home),
             },
 
             {
-              title: translation.t('user.courses.navbar.courses'),
+              title: translation.t('courses.lessons.navbar.courses'),
               onClick: () => navigate(location.pathname),
             },
           ],
@@ -132,12 +132,12 @@ export const UserCoursesPage = ({ pathname }: { pathname: string }) => {
 
           links: [
             {
-              title: translation.t('user.courses.navbar.home'),
+              title: translation.t('courses.sections.navbar.home'),
               onClick: () => navigate(config.pages.user.home),
             },
 
             {
-              title: translation.t('user.courses.navbar.courses'),
+              title: translation.t('courses.sections.navbar.courses'),
               onClick: () => navigate(location.pathname),
             },
           ],
@@ -165,12 +165,12 @@ export const UserCoursesPage = ({ pathname }: { pathname: string }) => {
 
         links: [
           {
-            title: translation.t('user.courses.navbar.home'),
+            title: translation.t('courses.courses.navbar.home'),
             onClick: () => navigate(config.pages.user.home),
           },
 
           {
-            title: translation.t('user.courses.navbar.courses'),
+            title: translation.t('courses.courses.navbar.courses'),
             onClick: () => navigate(location.pathname),
           },
         ],

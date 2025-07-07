@@ -68,17 +68,17 @@ export const AdminEnrollmentsPage = ({ pathname }: { pathname: string }) => {
 
           links: [
             {
-              title: translation.t('admin.courses.navbar.home'),
+              title: translation.t('admin-enrollments.navbar.home'),
               onClick: () => navigate(config.pages.admin.home),
             },
 
             {
-              title: translation.t('admin.courses.navbar.courses'),
+              title: translation.t('admin-enrollments.navbar.courses'),
               onClick: () => navigate(config.pages.admin.courses),
             },
 
             {
-              title: translation.t('admin.courses.navbar.enrollments'),
+              title: translation.t('admin-enrollments.navbar.enrollments'),
               onClick: () => navigate(location.pathname),
               is_active: true,
             },
@@ -133,17 +133,17 @@ export const AdminEnrollmentsPage = ({ pathname }: { pathname: string }) => {
 
         links: [
           {
-            title: translation.t('admin.courses.navbar.home'),
+            title: translation.t('admin-enrollments.navbar.home'),
             onClick: () => navigate(config.pages.admin.home),
           },
 
           {
-            title: translation.t('admin.courses.navbar.courses'),
+            title: translation.t('admin-enrollments.navbar.courses'),
             onClick: () => navigate(config.pages.admin.courses),
           },
 
           {
-            title: translation.t('admin.courses.navbar.enrollments'),
+            title: translation.t('admin-enrollments.navbar.enrollments'),
             onClick: () => navigate(location.pathname),
             is_active: true,
           },

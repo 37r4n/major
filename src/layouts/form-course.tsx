@@ -24,11 +24,13 @@ export const FormCourse = ({
   const [newTitle, setNewTitle] = useState(course?.title || '');
   const [newDescription, setNewDescription] = useState(course?.description || null);
   const [newManualUrl, setNewManualUrl] = useState(course?.manual_url || null);
-  const [newAuthor, setNewAuthor] = useState(course?.author || {
-    id: '',
-    name: '',
-    avatar_url: ''
-  });
+  const [newAuthor, setNewAuthor] = useState(
+    course?.author || {
+      id: '',
+      name: '',
+      avatar_url: '',
+    },
+  );
 
   const handleSubmit = () => {
     const newCourse: Course = {
@@ -56,11 +58,11 @@ export const FormCourse = ({
       </header>
 
       <main className="flex flex-col gap-2 w-full">
-        <Input placeholder='Título' value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
+        <Input placeholder="Título" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
 
         <div className="flex gap-2">
           <Autocomplete
-            placeholder='Autor'
+            placeholder="Autor"
             defaultSelectedKey={newAuthor.id}
             onSelectionChange={(value) => {
               const selectedAuthor = authors.find((a) => a.id === value);
@@ -76,8 +78,16 @@ export const FormCourse = ({
           <Avatar src={newAuthor.avatar_url} />
         </div>
 
-        <Textarea placeholder='Descripción' value={newDescription ?? ''} onChange={(e) => setNewDescription(e.target.value)} />
-        <Input placeholder='URL de manual' value={newManualUrl ?? ''} onChange={(e) => setNewManualUrl(e.target.value)} />
+        <Textarea
+          placeholder="Descripción"
+          value={newDescription ?? ''}
+          onChange={(e) => setNewDescription(e.target.value)}
+        />
+        <Input
+          placeholder="URL de manual"
+          value={newManualUrl ?? ''}
+          onChange={(e) => setNewManualUrl(e.target.value)}
+        />
       </main>
 
       <footer className="flex">

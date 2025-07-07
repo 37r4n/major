@@ -1,12 +1,31 @@
-import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '../hooks/auth';
+import { ListTemplate } from '../templates/list-template';
 import { useNavigate } from 'react-router-dom';
+import { config } from '../config';
 
 export const HomePage = () => {
+  const auth = useAuth();
+  const translation = useTranslation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    navigate('/login');
-  }, []);
+  return (
+    <ListTemplate
+      navbar={{
+        user: auth.me,
 
-  return <div></div>;
+        links: [
+          {
+            title: translation.t('courses.lessons.navbar.home'),
+            onClick: () => navigate(config.pages.user.home),
+          },
+
+          {
+            title: translation.t('courses.lessons.navbar.courses'),
+            onClick: () => navigate(config.pages.user.courses),
+          },
+        ],
+      }}
+    />
+  );
 };

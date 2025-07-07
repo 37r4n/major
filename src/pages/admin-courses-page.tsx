@@ -14,6 +14,7 @@ import { User } from '../models/user';
 import { FormCourse } from '../layouts/form-course';
 import { IconCreate } from '../icons/icon-create';
 import { FormSection } from '../layouts/form-section';
+import { FormLesson } from '../layouts/form-lesson';
 
 export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
   const navigate = useNavigate();
@@ -55,11 +56,11 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
       title: course.title,
       description: course.description,
       author_id: course.author.id,
-      manual_url: course.manual_url
-    })
+      manual_url: course.manual_url,
+    });
 
-    await getAllCourses()
-    drawer.close()
+    await getAllCourses();
+    drawer.close();
   };
 
   const createCourse = async ({ course }: { course: Course }) => {
@@ -67,11 +68,11 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
       title: course.title,
       description: course.description,
       author_id: course.author.id,
-      manual_url: course.manual_url
-    })
+      manual_url: course.manual_url,
+    });
 
-    await getAllCourses()
-    drawer.close()
+    await getAllCourses();
+    drawer.close();
   };
 
   const updateSection = async ({ section }: { section: Section }) => {
@@ -80,10 +81,10 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
       course_id: course_id,
       title: section.title,
       description: section.description,
-    })
+    });
 
-    await getAllSections()
-    drawer.close()
+    await getAllSections();
+    drawer.close();
   };
 
   const createSection = async ({ section }: { section: Section }) => {
@@ -91,11 +92,39 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
       course_id: course_id,
       title: section.title,
       description: section.description,
-      display_order: section.display_order
-    })
+      display_order: section.display_order,
+    });
 
-    await getAllSections()
-    drawer.close()
+    await getAllSections();
+    drawer.close();
+  };
+
+  const updateLesson = async ({ lesson }: { lesson: Lesson }) => {
+    await services.lessons.update({
+      id: lesson.id,
+      title: lesson.title,
+      description: lesson.description,
+      display_order: lesson.display_order,
+      resource_url: lesson.resource_url,
+      duration_seconds: lesson.duration_seconds,
+    });
+
+    await getAllLessons();
+    drawer.close();
+  };
+
+  const createLesson = async ({ lesson }: { lesson: Lesson }) => {
+    await services.lessons.create({
+      section_id: lesson.section_id,
+      title: lesson.title,
+      description: lesson.description,
+      display_order: lesson.display_order,
+      duration_seconds: lesson.duration_seconds,
+      resource_url: lesson.resource_url,
+    });
+
+    await getAllLessons();
+    drawer.close();
   };
 
   useEffect(() => {
@@ -136,6 +165,25 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
               onClick: () => navigate(config.pages.admin.enrollments),
             },
           ],
+
+          actions: [
+            {
+              content: <IconCreate />,
+              onClick: () =>
+                drawer.fire({
+                  content: (
+                    <div className="flex justify-center items-center h-full w-full">
+                      <FormLesson
+                        section_id={section_id}
+                        title="Crear lección"
+                        onSubmit={({ lesson }) => createLesson({ lesson })}
+                        button="Guardar cambios"
+                      />
+                    </div>
+                  ),
+                }),
+            },
+          ],
         }}
         breadcrumbs={[
           { content: 'Cursos', onClick: () => navigate(`${pathname}`) },
@@ -150,7 +198,20 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
             drawer.fire({
               content: (
                 <div className="flex flex-col gap-8 justify-center items-center h-full w-full">
+                  <FormLesson
+                    section_id={section_id}
+                    title="Actualizar lección"
+                    lesson={{ ...lesson }}
+                    onSubmit={({ lesson }) => updateLesson({ lesson })}
+                    button="Guardar cambios"
+                  />
 
+                  <IconFolder
+                    onClick={() => {
+                      navigate(`${pathname}/${course_id}/${section_id}/${lesson.id}`);
+                      drawer.close();
+                    }}
+                  />
                 </div>
               ),
             }),
@@ -184,20 +245,22 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
 
           actions: [
             {
-              content: <IconCreate />, onClick: () => drawer.fire({
-                content: (
-                  <div className="flex justify-center items-center h-full w-full">
-                    <FormSection
-                      course_id={course_id}
-                      title="Crear curso"
-                      onSubmit={({ section }) => createSection({ section })}
-                      button="Guardar cambios"
-                    />
-                  </div>
-                ),
-              })
-            }
-          ]
+              content: <IconCreate />,
+              onClick: () =>
+                drawer.fire({
+                  content: (
+                    <div className="flex justify-center items-center h-full w-full">
+                      <FormSection
+                        course_id={course_id}
+                        title="Crear curso"
+                        onSubmit={({ section }) => createSection({ section })}
+                        button="Guardar cambios"
+                      />
+                    </div>
+                  ),
+                }),
+            },
+          ],
         }}
         breadcrumbs={[
           { content: 'Cursos', onClick: () => navigate(pathname) },
@@ -213,17 +276,19 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
               content: (
                 <div className="flex flex-col justify-center items-center h-full w-full gap-8">
                   <FormSection
-                    title='Editar sección'
+                    title="Editar sección"
                     course_id={course_id}
                     section={section}
                     onSubmit={({ section }) => updateSection({ section })}
-                    button='Guardar cambios'
+                    button="Guardar cambios"
                   />
 
-                  <IconFolder onClick={() => {
-                    navigate(`${pathname}/${course_id}/${section.id}`)
-                    drawer.close()
-                  }} />
+                  <IconFolder
+                    onClick={() => {
+                      navigate(`${pathname}/${course_id}/${section.id}`);
+                      drawer.close();
+                    }}
+                  />
                 </div>
               ),
             }),
@@ -256,20 +321,22 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
 
         actions: [
           {
-            content: <IconCreate />, onClick: () => drawer.fire({
-              content: (
-                <div className="flex justify-center items-center h-full w-full">
-                  <FormCourse
-                    title="Crear curso"
-                    authors={users}
-                    onSubmit={({ course }) => createCourse({ course })}
-                    button="Guardar cambios"
-                  />
-                </div>
-              ),
-            })
-          }
-        ]
+            content: <IconCreate />,
+            onClick: () =>
+              drawer.fire({
+                content: (
+                  <div className="flex justify-center items-center h-full w-full">
+                    <FormCourse
+                      title="Crear curso"
+                      authors={users}
+                      onSubmit={({ course }) => createCourse({ course })}
+                      button="Guardar cambios"
+                    />
+                  </div>
+                ),
+              }),
+          },
+        ],
       }}
       breadcrumbs={[
         { content: 'Cursos', is_active: true },
@@ -292,10 +359,12 @@ export const AdminCoursesPage = ({ pathname }: { pathname: string }) => {
                   button="Guardar cambios"
                 />
 
-                <IconFolder onClick={() => {
-                  navigate(`${pathname}/${course.id}`)
-                  drawer.close()
-                }} />
+                <IconFolder
+                  onClick={() => {
+                    navigate(`${pathname}/${course.id}`);
+                    drawer.close();
+                  }}
+                />
               </div>
             ),
           }),

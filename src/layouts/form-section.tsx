@@ -13,7 +13,7 @@ export const FormSection = ({
   button,
 }: {
   title: string;
-  course_id: string,
+  course_id: string;
   section?: Section;
   onSubmit: ({ section }: { section: Section }) => void;
   button: string;
@@ -31,9 +31,7 @@ export const FormSection = ({
       thumbnail_url: section?.thumbnail_url || null,
       background_url: section?.background_url || null,
       display_order: Number(newDisplayOrder),
-      is_unlocked: true
-
-
+      is_unlocked: true,
     };
 
     onSubmit({ section: newSection });
@@ -46,10 +44,14 @@ export const FormSection = ({
       </header>
 
       <main className="flex flex-col gap-2 w-full">
-        <Input placeholder='Título' value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
+        <Input placeholder="Título" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
 
-        <Textarea placeholder='Descripción' value={newDescription ?? ''} onChange={(e) => setNewDescription(e.target.value)} />
-        <Input placeholder='Posición' value={newDisplayOrder} onChange={(e) => setNewDisplayOrder(e.target.value)} />
+        <Textarea
+          placeholder="Descripción"
+          value={newDescription ?? ''}
+          onChange={(e) => setNewDescription(e.target.value)}
+        />
+        <Input placeholder="Posición" value={newDisplayOrder} onChange={(e) => setNewDisplayOrder(e.target.value)} />
       </main>
 
       <footer className="flex">

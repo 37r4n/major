@@ -5,6 +5,8 @@ import { assets } from '../assets';
 import { Divider } from '../components/divider';
 import { Card } from '../components/card';
 import { Avatar } from '../components/avatar';
+import { useNavigate } from 'react-router-dom';
+import { config } from '../config';
 
 export interface NavbarProps {
   user: User;
@@ -21,6 +23,8 @@ export interface NavbarProps {
 }
 
 export const Navbar = ({ user, links = [], actions = [] }: NavbarProps) => {
+  const navigate = useNavigate();
+
   return (
     <nav className="flex h-[50px] bg-foreground-50/50 w-vw]">
       <Card className="flex h-full w-full rounded-none">
@@ -56,7 +60,9 @@ export const Navbar = ({ user, links = [], actions = [] }: NavbarProps) => {
               ))}
             </div>
 
-            <Avatar src={user.avatar_url ?? ''} />
+            <div onClick={() => navigate(config.pages.login)}>
+              <Avatar src={user.avatar_url ?? ''} />
+            </div>
           </div>
         </div>
       </Card>

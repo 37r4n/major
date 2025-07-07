@@ -16,19 +16,19 @@ export const AdminHomePage = ({ pathname }: { pathname: string }) => {
 
         links: [
           {
-            title: translation.t('admin.courses.navbar.home'),
+            title: translation.t('admin-home.navbar.home'),
             onClick: () => navigate(pathname),
             is_active: true,
           },
 
           {
-            title: translation.t('admin.courses.navbar.courses'),
+            title: translation.t('admin-home.navbar.courses'),
             onClick: () => navigate(config.pages.admin.courses),
           },
 
           {
-            title: translation.t('admin.courses.navbar.enrollments'),
-            onClick: () => navigate(config.pages.admin.home),
+            title: translation.t('admin-home.navbar.enrollments'),
+            onClick: () => navigate(config.pages.admin.enrollments),
           },
         ],
       }}

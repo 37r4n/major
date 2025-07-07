@@ -13,7 +13,7 @@ export const FormLesson = ({
   button,
 }: {
   title: string;
-  section_id: string,
+  section_id: string;
   lesson?: Lesson;
   onSubmit: ({ lesson }: { lesson: Lesson }) => void;
   button: string;
@@ -35,9 +35,7 @@ export const FormLesson = ({
       display_order: Number(newDisplayOrder),
       duration_seconds: Number(newDurationSeconds),
       resource_url: newResourceUrl,
-      is_unlocked: true
-
-
+      is_unlocked: true,
     };
 
     onSubmit({ lesson: newLesson });
@@ -50,13 +48,20 @@ export const FormLesson = ({
       </header>
 
       <main className="flex flex-col gap-2 w-full">
-        <Input placeholder='Título' value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
+        <Input placeholder="Título" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
 
-        <Textarea placeholder='Descripción' value={newDescription ?? ''} onChange={(e) => setNewDescription(e.target.value)} />
-        <Input placeholder='Posición' value={newDisplayOrder} onChange={(e) => setNewDisplayOrder(e.target.value)} />
-        <Input placeholder='URL' value={newResourceUrl} onChange={(e) => setNewResourceUrl(e.target.value)} />
-        <Input placeholder='Tiempo en segundos' value={newDurationSeconds} onChange={(e) => setNewDurationSeconds(e.target.value)} />
-
+        <Textarea
+          placeholder="Descripción"
+          value={newDescription ?? ''}
+          onChange={(e) => setNewDescription(e.target.value)}
+        />
+        <Input placeholder="Posición" value={newDisplayOrder} onChange={(e) => setNewDisplayOrder(e.target.value)} />
+        <Input placeholder="URL" value={newResourceUrl} onChange={(e) => setNewResourceUrl(e.target.value)} />
+        <Input
+          placeholder="Tiempo en segundos"
+          value={newDurationSeconds}
+          onChange={(e) => setNewDurationSeconds(e.target.value)}
+        />
       </main>
 
       <footer className="flex">

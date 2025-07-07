@@ -8,7 +8,7 @@ export const config = {
   },
 
   pages: {
-    home: '/',
+    login: '/login',
 
     user: {
       home: '/',
