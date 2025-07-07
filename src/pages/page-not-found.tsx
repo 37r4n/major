@@ -13,7 +13,7 @@ export const PageNotFound = () => {
       title={translation.t('not-found.title')}
       description={translation.t('not-found.description')}
       button={translation.t('not-found.button')}
-      onClick={() => navigate(config.pages.home)}
+      onClick={() => navigate(config.pages.login)}
       src={assets.not_found}
     />
   );
