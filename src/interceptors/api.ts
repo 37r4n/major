@@ -20,6 +20,9 @@ export const ApiInterceptor = () => {
     (response) => response,
     (error) => {
       if (error?.response?.data?.error?.message) {
+        if(error.status) window.location.href = '/login';
+
+
         toast.fire({
           title: 'Error',
           description: error.response.data.error.message,
